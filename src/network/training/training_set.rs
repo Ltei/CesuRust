@@ -1,0 +1,33 @@
+
+use utils::matrix::Matrix;
+
+use network::music::INFOS_DIMENSION;
+use network::music::CHORD_DIMENSION;
+
+
+
+pub struct TrainingSet {
+    pub infos : Matrix,
+    pub inject_sequence : Vec<Matrix>,
+    pub compute_sequence : Vec<Matrix>,
+}
+
+
+impl TrainingSet {
+
+    pub fn new(infos : Matrix, inject_sequence : Vec<Matrix>, compute_sequence : Vec<Matrix>) -> TrainingSet {
+        assert!(infos.is_row() && infos.len == INFOS_DIMENSION);
+        for i in 0..inject_sequence.len() {
+            assert!(inject_sequence[i].is_row() && inject_sequence[i].len == CHORD_DIMENSION);
+        }
+        for i in 0..compute_sequence.len() {
+            assert!(compute_sequence[i].is_row() && compute_sequence[i].len == CHORD_DIMENSION);
+        }
+        return TrainingSet {
+            infos : infos,
+            inject_sequence : inject_sequence,
+            compute_sequence : compute_sequence,
+        }
+    }
+
+}
